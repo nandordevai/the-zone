@@ -50,7 +50,7 @@ export class Radio extends AudioModule {
       this.index = this.index + 1;
       if (this.index >= this.buffers.length) {
         this.index = 0;
-        this.shuffle();
+        this.buffers = this.shuffle(this.buffers);
       }
     }
   }
