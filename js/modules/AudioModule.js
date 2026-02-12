@@ -4,6 +4,7 @@ export class AudioModule {
         this.ctx = ctx;
         this.input = null;
         this.output = this.ctx.createGain();
+        this.debug = false;
     }
 
     set gain(level) {
@@ -21,10 +22,10 @@ export class AudioModule {
         } else if (target instanceof AudioNode) {
             targetName = target.constructor.name;
         }
-        console.log(`[Patch] ${this.name} → ${targetName}`);
+        this.log(`[Patch] ${this.name} → ${targetName}`);
 
         if (!destination) {
-            console.warn(`[Error] ${this.name} tried to connect to a null destination`);
+            this.log(`[Error] ${this.name} tried to connect to a null destination`, 'warn');
             return target;
         }
 
@@ -35,11 +36,24 @@ export class AudioModule {
                 this.output.connect(destination, outputIndex, inputIndex);
             }
         } catch (e) {
-            console.error(`[Connection failed] Verify that ${this.name}.output is a valid AudioNode`);
+            this.log(`[Connection failed] Verify that ${this.name}.output is a valid AudioNode`, 'error');
         }
 
         return target;
     }
+
+    log(msg, level) {
+        if (!this.debug) return;
+
+        if (level === 'error') {
+            console.error(msg);
+        } else if (level === 'warn') {
+            console.warn(msg);
+        } else {
+            console.log(msg);
+        }
+    }
+
     disconnect() {
         this.output.disconnect();
     }
