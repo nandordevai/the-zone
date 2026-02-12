@@ -1,0 +1,81 @@
+.leds {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 1;
+
+  .led {
+    --size: 0.75rem;
+    --level: .1;
+    border: 3px transparent;
+    border-radius: 100dvw;
+    height: var(--size);
+    transition: all 0.2s;
+    width: var(--size);
+  }
+
+  .led:nth-child(1),
+  .led:nth-child(2) {
+    background:
+      radial-gradient(oklch(0 0 120 / 0.1),
+        oklch(0 0 120 / 0.8)),
+      oklch(var(--level) 0.4 120);
+  }
+
+  .led:nth-child(3),
+  .led:nth-child(4) {
+    background:
+      radial-gradient(oklch(0 0 100 / 0.1),
+        oklch(0 0 100 / 0.8)),
+      oklch(var(--level) 0.4 100);
+  }
+
+  .led:nth-child(5) {
+    background:
+      radial-gradient(oklch(0 0 0 / 0.1),
+        oklch(0 0 0 / 0.8)),
+      oklch(var(--level) 0.3 10);
+  }
+
+  .label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    .row {
+      background-color: oklch(0.1 0 0);
+      background: linear-gradient(
+        to bottom,
+        oklch(0.25 0 0),
+        oklch(0.1 0 0)
+      );
+      box-shadow: 0px 0px 1px 0px oklch(0.2 0 0);
+      color: oklch(0.7 0 0);
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1rem;
+      padding: 0.25rem 0.5rem;
+      text-align: center;
+      text-shadow: 0px 0px 2px oklch(0.9 0 0);
+      text-transform: uppercase;
+      user-select: none;
+      -webkit-user-select: none;
+
+
+      &:nth-child(1) {
+        transform: rotateZ(1deg);
+      }
+    }
+  }
+
+  #led-row {
+    justify-content: center;
+    background: oklch(0.2 0 0);
+    box-shadow: inset 1px 1px 2px 2px oklch(0.1 0 0);
+    border-radius: 3px;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+}

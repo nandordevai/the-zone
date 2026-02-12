@@ -1,0 +1,94 @@
+.glitch {
+    --glitch: 5;
+    --glitch-lower: -1;
+    --glitch-upper: -2;
+
+    position: relative;
+    text-shadow: 0 0 0.25rem oklch(0.7 0.15 145 / 0.3);
+    z-index: var(--glitch);
+
+    &::after,
+    &::before {
+        content: attr(data-text);
+        inset: 0;
+        position: absolute;
+    }
+
+    &::after {
+        animation: idle-glitch 2s linear both infinite;
+        color: oklch(0.6 0 0);
+        filter: blur(2px);
+        z-index: var(--glitch-lower);
+    }
+
+    &::before {
+        animation: idle-glitch 2s linear reverse both infinite;
+        color: oklch(0.6 0.2 0);
+        z-index: var(--glitch-upper);
+    }
+}
+
+
+.heavy-glitch {
+    animation: heavy-glitch 0.1s linear infinite;
+    filter: contrast(200%) brightness(50%);
+}
+
+.heavy-glitch::after {
+    animation: ghost-trail 0.2s ease-out;
+}
+
+@keyframes ghost-trail {
+    0% {
+        opacity: 0.8;
+        transform: translate(-10px, 2px) scale(1.05);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+@keyframes heavy-glitch {
+    0% {
+        clip-path: inset(20% 0 50% 0);
+        transform: translateX(-5px);
+    }
+
+    50% {
+        clip-path: inset(60% 0 10% 0);
+        transform: translateX(5px);
+    }
+
+    100% {
+        clip-path: inset(10% 0 80% 0);
+        transform: translateX(0);
+    }
+}
+
+@keyframes idle-glitch {
+    0% {
+        transform: translate(0);
+    }
+
+    90% {
+        transform: translate(-2px, 2px);
+    }
+
+    92% {
+        transform: translate(-2px, -2px);
+    }
+
+    94% {
+        transform: translate(2px, 2px);
+    }
+
+    98% {
+        transform: translate(2px, -2px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}

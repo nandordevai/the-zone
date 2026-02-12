@@ -1,0 +1,196 @@
+@property --tx {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+#manual {
+  display: grid;
+  grid-area: manual;
+  grid-template-areas: "pages";
+  justify-self: center;
+  isolation: isolate;
+  position: relative;
+  z-index: 10;
+
+  --default-ty: 1rem;
+  --left: 0;
+  --top: 0;
+  --ty: 1rem;
+
+  --animation-time: 0.5s;
+  --font-size: 0.6rem;
+  --height: 37rem;
+  --line-height: 1;
+  --padding: 2rem;
+  --paper-color: oklch(0.8 0 0);
+  --width: 100dvw;
+
+  @media (min-width: 600px) {
+    --font-size: 0.75rem;
+    --height: 48rem;
+    --line-height: 1.25;
+    --manual-top: 4vh;
+    --padding: 4rem;
+    --width: 37rem;
+  }
+
+  * {
+    font-size: var(--font-size);
+    font-weight: 400;
+  }
+
+  p,
+  h2,
+  h3,
+  li {
+    margin-block-end: 1rem;
+  }
+
+  p,
+  li {
+    line-height: var(--line-height);
+  }
+
+  h3 {
+    text-transform: uppercase;
+  }
+
+  ul {
+    list-style-type: '- ';
+    list-style-position: inside;
+  }
+
+  footer p {
+    display: grid;
+    line-height: 1.5;
+  }
+
+  img {
+    position: relative;
+    top: 1rem;
+  }
+
+  .page {
+    box-shadow: 0 0 1rem oklch(0.1 0 0 / 0.5);
+    color: black;
+    cursor: pointer;
+    font-family: 'Special Elite', 'Courier', monospace;
+    grid-area: pages;
+    height: var(--height);
+    padding: var(--padding);
+    position: absolute;
+    transform: translateX(var(--tx)) translateY(var(--ty)) rotateZ(var(--tr));
+    transition: all 0.3s cubic-bezier(.67, .31, .15, .96);
+    width: var(--width);
+    will-change: transform;
+  }
+
+  .page-1 {
+    --manual-top: -1vh;
+    --tx: -52%;
+    --ty-hover: -3%;
+    --tr: -1deg;
+    --tr-hover: -1.5deg;
+
+    @media (min-width: 600px) {
+      --manual-top: 4vh;
+      --tx: -60%;
+    }
+
+    background:
+      url(../img/stain-1.png) no-repeat bottom left,
+      url(../img/stain-2.png) no-repeat 170% -25%,
+      var(--paper-color);
+    background-size: 33%, 60%;
+    z-index: 2;
+
+    &:hover:not(.open) {
+      transform: translateX(var(--tx)) translateY(var(--ty-hover)) rotateZ(var(--tr-hover));
+    }
+
+    &::before {
+      background: url(../img/paper.jpeg) no-repeat center center fixed;
+      background-size: cover;
+      content: '';
+      height: 100%;
+      left: 0;
+      opacity: 0.5;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: -1;
+    }
+
+    &.swapping {
+      animation: swapping-left var(--animation-time) ease-in-out;
+    }
+  }
+
+  .page-2 {
+    --manual-top: 17vh;
+    --tr: 2deg;
+    --tx: -45%;
+
+    @media (min-width: 600px) {
+      --manual-top: 5vh;
+      --tx: -40%;
+    }
+
+    background:
+      url(../img/stain-3.png) no-repeat 250% 160%,
+      var(--paper-color);
+    background-size: 80%;
+    z-index: 1;
+
+    &::before {
+      background: url(../img/paper.jpeg) no-repeat center center fixed;
+      background-size: cover;
+      content: '';
+      height: 100%;
+      left: 0;
+      opacity: 0.5;
+      position: absolute;
+      top: 0;
+      transform: rotateZ(180deg);
+      width: 100%;
+      z-index: -1;
+    }
+
+    &.swapping {
+      animation: swapping-right var(--animation-time) ease-in-out;
+    }
+  }
+
+  .top {
+    z-index: 5;
+  }
+}
+
+@keyframes swapping-left {
+  0% {
+    --tx: -60%;
+  }
+
+  50% {
+    --tx: -110%;
+  }
+
+  100% {
+    --tx: -60%;
+  }
+}
+
+@keyframes swapping-right {
+  0% {
+    --tx: -40%;
+  }
+
+  50% {
+    --tx: 10%;
+  }
+
+  100% {
+    --tx: -40%;
+  }
+}

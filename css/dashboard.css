@@ -1,0 +1,81 @@
+.dashboard {
+  grid-area: dashboard;
+
+  --align: center;
+  --areas:
+    "leds switcher"
+    "audio switcher";
+  --columns: repeat(2, 1fr);
+  --gap: 1rem;
+  --justify: center;
+  --padding: 1.25rem 1rem;
+  --switcher-gap: 0.25rem;
+  --width: 80vw;
+
+  @media (min-width: 600px) {
+    --align: flex-start;
+    --areas:
+      "leds"
+      "switcher"
+      "audio";
+    --columns: 1fr;
+    --content-width: auto;
+    --gap: 0.5rem;
+    --justify: start;
+    --padding: 2rem 1rem;
+    --switcher-gap: 0.5rem;
+    --width: 10rem;
+  }
+
+  align-items: var(--align);
+  justify-self: var(--justify);
+  padding: var(--padding);
+  position: relative;
+  width: var(--width);
+}
+
+.dashboard-content {
+  align-items: space-between;
+  display: grid;
+  gap: var(--gap);
+  grid-template-areas: var(--areas);
+  grid-template-columns: var(--columns);
+  height: 100%;
+  margin: 0 auto;
+}
+
+.leds {
+  grid-area: leds;
+}
+
+#audio {
+  grid-area: audio;
+  justify-content: flex-end;
+}
+
+#dashboard-plate {
+  background: oklch(0.25 0 0);
+  box-shadow: 1px 1px 5px 0px oklch(0 0 0 / 0.8);
+  border: 1px solid oklch(0.3 0 0);
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 0;
+}
+
+#switcher {
+  display: flex;
+  flex-direction: column;
+  gap: var(--switcher-gap);
+  grid-area: switcher;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  z-index: 0;
+}

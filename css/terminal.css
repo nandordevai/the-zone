@@ -1,0 +1,217 @@
+.terminal {
+  align-self: end;
+  grid-area: terminal;
+  justify-self: end;
+
+  --outer-border-radius: 3rem;
+  --inner-border-radius: 2rem;
+  --terminal-bg-img: url('../img/1.jpeg');
+  --terminal-bg-opacity: 0.6;
+  --dark-grey: oklch(0.1 0 0 / 0);
+  --mid-grey: oklch(0.2 0 0);
+  --light-grey: oklch(0.3 0 0);
+  --angle: 45deg;
+  --pos: 38%;
+  --spread: 5deg;
+
+  --terminal-bg: 1;
+  --overlay: 10;
+  --content: 5;
+  --noise: 3;
+
+  --bezel-border: 0.5rem;
+  --bezel-width: clamp(1rem, 4vw, 3rem);
+  --content-padding: 1rem;
+  --width: calc(100dvw - 2 * var(--p-i));
+
+  @media (min-width: 600px) {
+    --bezel-border: 1rem;
+    --content-padding: 1rem;
+    --width: 60vw;
+
+    align-self: center;
+    max-height: 75vh;
+  }
+
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(to bottom,
+    oklch(1 0 0 / 0.2),
+    oklch(1 0 0 / 0) 1%,
+    oklch(1 0 0 / 0)) no-repeat border-box,
+  conic-gradient(at calc(100% - var(--pos)) 50%,
+    var(--dark-grey),
+    var(--dark-grey) calc(var(--angle) - var(--spread)),
+    var(--light-grey) var(--angle),
+    var(--dark-grey) calc(var(--angle) + var(--spread)),
+    var(--dark-grey) calc(90deg + var(--angle) - var(--spread)),
+    var(--light-grey) calc(90deg + var(--angle)),
+    var(--dark-grey) calc(90deg + var(--angle) + var(--spread))) padding-box,
+  conic-gradient(from 180deg at var(--pos) 50%,
+    var(--dark-grey),
+    var(--dark-grey) calc(var(--angle) - var(--spread)),
+    var(--light-grey) var(--angle),
+    var(--dark-grey) calc(var(--angle) + var(--spread)),
+    var(--dark-grey) calc(90deg + var(--angle) - var(--spread)),
+    var(--light-grey) calc(90deg + var(--angle)),
+    var(--dark-grey) calc(90deg + var(--angle) + var(--spread))) padding-box,
+  oklch(0.1 0 0);
+  border: var(--bezel-border) solid transparent;
+  border-radius: var(--outer-border-radius);
+  box-shadow: inset 1.5rem 1.5rem 2rem oklch(0 0 0 / 0.75),
+  inset -1.5rem -1.5rem 2rem oklch(1 0 0 / 0.1),
+  0 0 var(--bezel-border) oklch(0 0 0 / 0.5),
+  0.25rem 0.25rem 0.5rem oklch(0 0 0 / 0.5);
+  height: fit-content;
+  position: relative;
+  width: var(--width);
+
+  &::before {
+    background-color: var(--mid-grey);
+    border-radius: var(--inner-border-radius);
+    content: '';
+    height: calc(100% - (var(--bezel-width) * 2));
+    left: var(--bezel-width);
+    position: absolute;
+    top: var(--bezel-width);
+    width: calc(100% - var(--bezel-width) * 2);
+    z-index: var(--terminal-bg);
+  }
+
+  .bg {
+    /* animation: crt-init 0.5s linear forwards; */
+    background-image: var(--terminal-bg-img);
+    background-position: 50% 50%;
+    background-size: cover;
+    border-radius: var(--inner-border-radius);
+    mask-image: radial-gradient(oklch(0 0 0 / 0.4) 10%,
+        oklch(0 0 0 / 0.25) 100%);
+    opacity: var(--terminal-bg-opacity);
+    height: calc(100% - var(--bezel-width) * 2);
+    left: var(--bezel-width);
+    position: absolute;
+    top: var(--bezel-width);
+    transition: opacity 0.3s;
+    width: calc(100% - var(--bezel-width) * 2);
+    z-index: calc(var(--terminal-bg) + 1);
+  }
+
+  .content {
+    align-content: flex-end;
+    border-radius: var(--inner-border-radius);
+    filter: contrast(1.1) brightness(1.1);
+    height: calc(100% - var(--bezel-width) * 2);
+    left: var(--bezel-width);
+    mix-blend-mode: screen;
+    overflow: scroll;
+    position: absolute;
+    padding: var(--content-padding);
+    scrollbar-width: 0;
+    top: var(--bezel-width);
+    width: calc(100% - var(--bezel-width) * 2);
+    z-index: var(--content);
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .cursor {
+    animation: blink 1s step-end infinite;
+    background-color: var(--text-color);
+    border-radius: 1px;
+    display: inline-block;
+    height: 1.2em;
+    box-shadow: 0 0 2px var(--text-color);
+    vertical-align: middle;
+    width: 0.6rem;
+  }
+
+  .scanlines {
+    --offset: 2px;
+    --blur: 5px;
+    --spread: 1px;
+    background-image:
+      repeating-linear-gradient(oklch(0 0 0 / 0.2),
+        oklch(0 0 0 / 0.2) 2px,
+        transparent 2px,
+        transparent 4px);
+    border-radius: var(--inner-border-radius);
+    box-shadow:
+      inset calc(-1 * var(--offset)) calc(-1 * var(--offset)) var(--blur) var(--spread) black,
+      inset var(--offset) var(--offset) var(--blur) var(--spread) black;
+    height: calc(100% - var(--bezel-width) * 2);
+    mask-image:
+      radial-gradient(oklch(0 0 0 / 0.5) 10%,
+        oklch(0 0 0 / 0.2) 100%);
+    left: var(--bezel-width);
+    position: absolute;
+    top: var(--bezel-width);
+    width: calc(100% - var(--bezel-width) * 2);
+    z-index: var(--overlay);
+  }
+
+  .text {
+    color: var(--text-color);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.6rem, 1.5vw, 1rem);
+    text-shadow:
+      -0.5px 0 #ff0000,
+      0.5px 0 #00ffff,
+      0 0 8px rgba(51, 255, 51, 0.8);
+  }
+
+  .title {
+    font-weight: 800;
+    color: oklch(from var(--text-color) 1 c h);
+  }
+
+  #noise-overlay {
+    border-radius: var(--inner-border-radius);
+    height: calc(100% - var(--bezel-width) * 2);
+    left: var(--bezel-width);
+    /* mix-blend-mode: screen; */
+    opacity: 0.3;
+    position: absolute;
+    top: var(--bezel-width);
+    width: calc(100% - var(--bezel-width) * 2);
+    z-index: var(--noise);
+  }
+}
+
+@keyframes crt-init {
+  0% {
+    transform: scaleX(0) scaleY(0.005);
+    filter: brightness(5);
+  }
+
+  50% {
+    transform: scaleX(1) scaleY(0.005);
+    filter: brightness(5);
+  }
+
+  100% {
+    transform: scaleX(1) scaleY(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes background-zoom {
+  0% {
+    background-size: 100%;
+  }
+
+  100% {
+    background-size: 200%;
+  }
+}
